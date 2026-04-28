@@ -26,16 +26,14 @@ public class TaskManagerAPI extends JFrame {
     }
 
     private void initUI() {
-        // Main panel
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         
-        // Output area
         outputArea = new JTextArea();
         outputArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(outputArea);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         
-        // Input panel
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
         
         inputPanel.add(new JLabel("Task ID:"));
@@ -52,7 +50,7 @@ public class TaskManagerAPI extends JFrame {
         
         JPanel buttonPanel = new JPanel(new FlowLayout());
         
-        // Create button
+
         JButton createBtn = new JButton("CREATE (POST)");
         createBtn.addActionListener(new ActionListener() {
             @Override
@@ -60,8 +58,7 @@ public class TaskManagerAPI extends JFrame {
                 createTask();
             }
         });
-        
-        // Read button
+
         JButton readBtn = new JButton("READ ALL (GET)");
         readBtn.addActionListener(new ActionListener() {
             @Override
@@ -70,7 +67,6 @@ public class TaskManagerAPI extends JFrame {
             }
         });
         
-        // Update button
         JButton updateBtn = new JButton("UPDATE (PUT)");
         updateBtn.addActionListener(new ActionListener() {
             @Override
@@ -79,7 +75,6 @@ public class TaskManagerAPI extends JFrame {
             }
         });
         
-        // Delete button
         JButton deleteBtn = new JButton("DELETE");
         deleteBtn.addActionListener(new ActionListener() {
             @Override
@@ -100,8 +95,7 @@ public class TaskManagerAPI extends JFrame {
         mainPanel.add(southPanel, BorderLayout.SOUTH);
         
         add(mainPanel);
-        
-        // Initial message
+
         outputArea.append("=== Task Manager REST API Started ===\n");
         outputArea.append("Available commands:\n");
         outputArea.append("1. CREATE (POST) - Add new task\n");
@@ -110,7 +104,6 @@ public class TaskManagerAPI extends JFrame {
         outputArea.append("4. DELETE - Delete task by ID\n\n");
     }
 
-    // CREATE operation
     private void createTask() {
         String text = textField.getText().trim();
         if (text.isEmpty()) {
@@ -121,21 +114,20 @@ public class TaskManagerAPI extends JFrame {
         Task newTask = new Task(idCounter.getAndIncrement(), text, false);
         tasks.add(newTask);
         
-        outputArea.append("✅ CREATE SUCCESS: Task created with ID " + newTask.getId() + "\n");
+        outputArea.append("CREATE SUCCESS: Task created with ID " + newTask.getId() + "\n");
         outputArea.append("   Text: " + newTask.getText() + "\n");
         outputArea.append("   Completed: " + newTask.isCompleted() + "\n\n");
         
         clearFields();
     }
 
-    // READ ALL operation
     private void readAllTasks() {
         if (tasks.isEmpty()) {
-            outputArea.append("ℹ️  No tasks found. Create some tasks first!\n\n");
+            outputArea.append(" No tasks found. Create some tasks first!\n\n");
             return;
         }
         
-        outputArea.append("📋 ALL TASKS:\n");
+        outputArea.append(" ALL TASKS:\n");
         for (Task task : tasks) {
             outputArea.append("   ID: " + task.getId() + 
                             " | Text: " + task.getText() + 
@@ -144,7 +136,6 @@ public class TaskManagerAPI extends JFrame {
         outputArea.append("Total tasks: " + tasks.size() + "\n\n");
     }
 
-    // UPDATE operation
     private void updateTask() {
         String idText = idField.getText().trim();
         if (idText.isEmpty()) {
@@ -168,7 +159,7 @@ public class TaskManagerAPI extends JFrame {
             
             taskToUpdate.setCompleted(completedCheckBox.isSelected());
             
-            outputArea.append("✏️  UPDATE SUCCESS: Task " + id + " updated\n");
+            outputArea.append("UPDATE SUCCESS: Task " + id + " updated\n");
             outputArea.append("   New Text: " + taskToUpdate.getText() + "\n");
             outputArea.append("   Completed: " + taskToUpdate.isCompleted() + "\n\n");
             
@@ -179,7 +170,6 @@ public class TaskManagerAPI extends JFrame {
         }
     }
 
-    // DELETE operation
     private void deleteTask() {
         String idText = idField.getText().trim();
         if (idText.isEmpty()) {
@@ -197,7 +187,7 @@ public class TaskManagerAPI extends JFrame {
             }
             
             tasks.remove(taskToDelete);
-            outputArea.append("🗑️  DELETE SUCCESS: Task " + id + " removed\n\n");
+            outputArea.append(" DELETE SUCCESS: Task " + id + " removed\n\n");
             clearFields();
             
         } catch (NumberFormatException e) {
