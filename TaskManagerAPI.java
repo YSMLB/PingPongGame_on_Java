@@ -214,7 +214,6 @@ public class TaskManagerAPI extends JFrame {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Task model class
     private static class Task {
         private int id;
         private String text;
